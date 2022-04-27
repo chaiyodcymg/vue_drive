@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
+
+let path;
+
 const routes = [
   {
-    path: '/',
+    path: "/",
     name: 'home',
     component: HomeView
   },
@@ -21,5 +24,29 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+
+
+router.beforeEach(async (to, from, next) => {
+  path = to.path;
+  routes.push({ path: to.path, component: HomeView })
+  console.log(routes);
+  // await axios.get('http://localhost:3001' + to.path)
+  //   .then((response) => {
+  //     // this.data = response.data;
+  //     console.log(response.data)
+  //   })
+  // console.log(to.path);
+  // if (!to.params.auth) {
+  // next('/login')
+  // } else {
+
+  // }
+  next()
+})
+console.log(path)
+
+
+
 
 export default router
